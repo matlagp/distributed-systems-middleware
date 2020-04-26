@@ -1,0 +1,30 @@
+syntax = "proto3";
+package eventify;
+
+// Sort of like event notify, but shorter
+service Eventify {
+    // Subscribe for a particular event type
+    rpc Subscribe (SubRequest) returns (stream Event);
+}
+
+enum EventType {
+    CONCERT = 0;
+    CONFERENCE = 1;
+    FESTIVAL = 2;
+}
+
+message SubRequest {
+    EventType type = 1;
+}
+    
+message Event {
+    string name = 1;
+    EventType type = 2;
+
+    message Instance {
+        string location = 1;
+        string date = 2;
+    }
+
+    repeated Instance instances = 3;
+}
